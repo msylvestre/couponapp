@@ -127,13 +127,3 @@ http://yeoman.io/codelab
 #### Deployment on Heroku
 https://gist.github.com/micjamking/9539467
 
-Legend
-==========
-### Title
-#### Smaller Title
-
-> Horizontal bar to mark an important stuff
-
-```
- Command within grey background
-```
