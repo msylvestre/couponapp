@@ -11,16 +11,31 @@ Create a directory and go in it
 >md couponapp
 >cd couponapp
 ```
+
 Clone the app
 ```
 >git clone https://github.com/msylvestre/couponapp.git
 ```
+
 Install the dependencies
 ```
 >npm install
 ```
 
+Start the web server locally
+```
+> grunt serve
+```
+
+
 ### Deployment on Heroku
+
+Build the app
+```
+>grunt build
+```
+
+
 
 ### Setup of the app
 
