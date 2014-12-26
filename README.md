@@ -41,10 +41,10 @@ $ grunt build
 
 Come from yeoman scaffold with angular + bootstrap
 
-Prerequisite
-> nodejs.org
-> git-scm.org
-> toolbelt.heroku.com
+*Prerequisite*
+- nodejs.org
+- git-scm.org
+- toolbelt.heroku.com
 
 Verify you have the pre-requisite
 ```
