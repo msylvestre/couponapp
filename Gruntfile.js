@@ -357,7 +357,7 @@ module.exports = function (grunt) {
         },
         heroku: {
             options: {
-                remote: 'git@heroku.com:yeo13.git',
+                remote: 'git@heroku.com:couponapp.git',
                 branch: 'master'
             }
         }
