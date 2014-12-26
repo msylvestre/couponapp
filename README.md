@@ -35,6 +35,20 @@ Build the app
 $ grunt build
 ```
 
+Deploy on heroku
+```
+$ grunt deploy
+```
+
+Open the browser
+```
+$ heroku open
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku open --app couponapp
+```
 
 
 ### Setup of the app
@@ -111,6 +125,48 @@ $ grunt serve:dist
 
 Prepare the app to be depoyed on Heroku
 > Follow this tutorial: https://gist.github.com/micjamking/9539467
+
+#### Below is part of the instruction
+
+Create the heroku app
+```
+$ heroku create <app_name>
+```
+
+If it already exist verify you have a remote called "heroku"
+```
+$ git remote -v
+```
+
+If not create it 
+```
+$ git remote add heroku https://git.heroku.com/couponapp.git
+```
+
+Deploy on heroku
+```
+$ grunt deploy
+```
+
+Start the app if it's not already running
+```
+$ heroku ps:scale web=1
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku ps:scale web=1 --app couponapp
+```
+
+Open the browser
+```
+$ heroku open
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku open --app couponapp
+```
 
 
 ### References
