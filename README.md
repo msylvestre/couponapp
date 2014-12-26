@@ -133,15 +133,12 @@ Create the heroku app
 $ heroku create <app_name>
 ```
 
-If it already exist verify you have a remote called "heroku"
-```
-$ git remote -v
-```
+Edit the grunt file to change the deployment ssh adress 
+- Find buildcontrol: in Grunfile.js in the root of the application
+- Change remote: 'git@heroku.com:couponapp.git' by remote: 'git@heroku.com:MyNewServerName.git'
 
-If not create it 
-```
-$ git remote add heroku https://git.heroku.com/couponapp.git
-```
+Make sure you have ssh key set
+- Other wise, refer to http://stackoverflow.com/questions/4269922/permission-denied-publickey-when-deploying-heroku-code-fatal-the-remote-end
 
 Deploy on heroku
 ```
