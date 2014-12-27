@@ -165,6 +165,10 @@ You may have to to run it with the "-app" param
 $ heroku open --app couponapp
 ```
 
+If there's error, you can look at the log
+```
+$ heroku logs --tail
+```
 
 ### References
 
