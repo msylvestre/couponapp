@@ -51,7 +51,7 @@ $ heroku open --app couponapp
 ```
 
 
-### Setup of the app
+### Setup of the app with Yeoman Angular scaffold
 
 Come from yeoman scaffold with angular + bootstrap
 
@@ -108,10 +108,28 @@ Run the Karma unit test
 $ grunt test
 ```
 
-Run grunt test and build the app.
+Start the app locally
+```
+$ grunt serve
+```
+
+Run Karma test and build the app.
 ```
 $ grunt
 ```
+
+Build the app only
+```
+$ grunt build
+```
+
+Preview your built app
+```
+$ grunt serve:dist
+```
+
+
+### Setup the app to deploy on Heroku
 
 You can also running just the build
 ```
