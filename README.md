@@ -35,9 +35,23 @@ Build the app
 $ grunt build
 ```
 
+Deploy on heroku
+```
+$ grunt deploy
+```
+
+Open the browser
+```
+$ heroku open
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku open --app couponapp
+```
 
 
-### Setup of the app
+### Setup of the app with Yeoman Angular scaffold
 
 Come from yeoman scaffold with angular + bootstrap
 
@@ -94,10 +108,28 @@ Run the Karma unit test
 $ grunt test
 ```
 
-Run grunt test and build the app.
+Start the app locally
+```
+$ grunt serve
+```
+
+Run Karma test and build the app.
 ```
 $ grunt
 ```
+
+Build the app only
+```
+$ grunt build
+```
+
+Preview your built app
+```
+$ grunt serve:dist
+```
+
+
+### Setup the app to deploy on Heroku
 
 You can also running just the build
 ```
@@ -112,6 +144,49 @@ $ grunt serve:dist
 Prepare the app to be depoyed on Heroku
 > Follow this tutorial: https://gist.github.com/micjamking/9539467
 
+#### Below is part of the instruction
+
+Create the heroku app
+```
+$ heroku create <app_name>
+```
+
+Edit the grunt file to change the deployment ssh adress 
+- Find buildcontrol: in Grunfile.js in the root of the application
+- Change remote: 'git@heroku.com:couponapp.git' by remote: 'git@heroku.com:MyNewServerName.git'
+
+Make sure you have ssh key set
+- Other wise, refer to http://stackoverflow.com/questions/4269922/permission-denied-publickey-when-deploying-heroku-code-fatal-the-remote-end
+
+Deploy on heroku
+```
+$ grunt deploy
+```
+
+Start the app if it's not already running
+```
+$ heroku ps:scale web=1
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku ps:scale web=1 --app couponapp
+```
+
+Open the browser
+```
+$ heroku open
+```
+
+You may have to to run it with the "-app" param
+```
+$ heroku open --app couponapp
+```
+
+If there's error, you can look at the log
+```
+$ heroku logs --tail
+```
 
 ### References
 
