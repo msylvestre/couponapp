@@ -3,26 +3,20 @@
 angular.module('yeoApp')
   .controller('MainCtrl', function ($scope, localStorageService) {
 
-    var todosInStore = localStorageService.get('todos');
+    var couponsInStore = localStorageService.get('coupons');
 
-    $scope.todos = todosInStore || [];
+    $scope.coupons = couponsInStore || [];
 
-    $scope.$watch('todos', function () {
-     /*
-      $scope.todos = [
-        {
-          name: 'Coupon 1',
-          price: 0.99,
-          description: 'Revelon rebate next week',
-          canPurchase: true,
-          soldOut: false,
-        }
-      ];
-      */
-      localStorageService.set('todos', $scope.todos);
-      $scope.getTotal();
+    // FUNC: Watch when change happen in the "coupons" array and update the localstorage
+    $scope.$watch('coupons', function () {
+
+      // Update the local storage
+      localStorageService.set('coupons', $scope.coupons);
+
+      $scope.updateTotal();
     }, true);
 
+    // FUNC: Add a coupon to the "coupons" array by creating a jason object.  Later will insert into a db
     $scope.addCoupon = function () {
       
       
@@ -35,27 +29,33 @@ angular.module('yeoApp')
         couponQty: $scope.couponQty,
       };
       
-      //window.alert("mycoupon.desc: " + myCoupon.desc);
-      $scope.todos.push(myCoupon);
+      //alert("mycoupon.desc: " + myCoupon.desc);
+      $scope.coupons.push(myCoupon);
       $scope.desc = '';
       $scope.price = '';
-      //$scope.getTotal();
     };
 
+    // FUNC: Remove a coupon from the "coupons" array.  Later will remove from the db
     $scope.removeCoupon = function (index) {
-      $scope.todos.splice(index, 1);
+      $scope.coupons.splice(index, 1);
     };
 
-    $scope.getTotal = function () {
+    $scope.updateTotal = function () {
       $scope.itemPriceTotal = 0;
       $scope.couponWorthTotal = 0;
 
-      for (var i = 0; i < $scope.todos.length; i++) {
-        $scope.itemPriceTotal = $scope.itemPriceTotal + $scope.todos[i].itemPrice;
-        $scope.couponWorthTotal = $scope.couponWorthTotal + $scope.todos[i].couponWorth;
+      for (var i = 0; i < $scope.coupons.length; i++) {
+        $scope.itemPriceTotal = $scope.itemPriceTotal + $scope.coupons[i].itemPrice;
+        $scope.couponWorthTotal = $scope.couponWorthTotal + $scope.coupons[i].couponWorth;
       }
 
-      //$scope.total = 99.9;
     };
+
+    // Example of alert
+    $scope.hello = function(name) {
+        return name + " inc.";
+
+        //HTML : <pre>{{hello("marco")}}</pre>
+    }
 
   });
