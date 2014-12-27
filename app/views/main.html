@@ -1,7 +1,7 @@
 <div class="container">
   <h3>Add Coupon</h3>
 
-  <!-- Todos input -->
+  <!-- coupons input -->
   <div>
     <form role="form" ng-submit="addCoupon()">
       <div class="row">
@@ -13,12 +13,14 @@
           
           <div>Item Price : <input type="number" step="0.01" min="0.01" ng-model="itemPrice" placeholder="Enter item price" class="form-control"></div>
           
-          <div>Tax ? : <input type="text" ng-model="isTax" class="form-control"></div>
+          <div>Tax ? : <input type="checkbox" ng-model="isTax" class="form-control"></div>
           
           <div>Coupon Worth : <input type="number" step="0.01" min="0.01" ng-model="couponWorth" placeholder="Enter Coupon Worth" class="form-control"></div>
 
           <div>Qty : <input type="number" step="1" min="1" ng-model="couponQty" placeholder="Enter Coupon Quantity" class="form-control"></div>
 
+
+      <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
         </div>
          <span class="input-group-btn">
             <input type="submit" class="btn btn-primary" value="Add">
@@ -45,7 +47,7 @@
         <th>Total Price</th>
         <th>Action</th>
       </tr> 
-      <tr ng-repeat="t in todos">
+      <tr ng-repeat="t in coupons">
         <td>{{t.itemName}}</td>
         <td>{{t.itemQty}}</td>
         <td>{{t.itemPrice | currency}}</td>
