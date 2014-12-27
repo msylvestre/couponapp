@@ -1,4 +1,4 @@
-<div class="container" ng-controller="MainCtrl">
+<div class="container">
   <h3>Add Coupon</h3>
 
   <!-- Todos input -->
@@ -6,8 +6,19 @@
     <form role="form" ng-submit="addCoupon()">
       <div class="row">
         <div class="input-group"> 
-          <div>Coupon Description : <input type="text" ng-model="desc" placeholder="Enter coupon description" class="form-control"></div>
-          <div>Rebate : <input type="number" step="0.01" min="0.01" required ng-model="price" placeholder="Enter coupon price" class="form-control"></div>
+          
+          <div>Item Name : <input type="text" ng-model="itemName" placeholder="Enter Item Name" class="form-control"></div>
+          
+          <div>Qty : <input type="number" step="1" min="1" ng-model="itemQty" placeholder="Enter Item Quantity" class="form-control"></div>
+          
+          <div>Item Price : <input type="number" step="0.01" min="0.01" ng-model="itemPrice" placeholder="Enter item price" class="form-control"></div>
+          
+          <div>Tax ? : <input type="text" ng-model="isTax" class="form-control"></div>
+          
+          <div>Coupon Worth : <input type="number" step="0.01" min="0.01" ng-model="couponWorth" placeholder="Enter Coupon Worth" class="form-control"></div>
+
+          <div>Qty : <input type="number" step="1" min="1" ng-model="couponQty" placeholder="Enter Coupon Quantity" class="form-control"></div>
+
         </div>
          <span class="input-group-btn">
             <input type="submit" class="btn btn-primary" value="Add">
@@ -19,26 +30,50 @@
   <hr>
 
   <!-- Table of Coupon -->
+  <h3>Item & Coupon list</h3>
   <div>
     <table class="table table-striped">
       <tr>
-        <th>Id</th>
-        <th>Coupon Desc</th>
-        <th>Value</th>
+        <th>Item Name</th>
+        <th>Qty</th>
+        <th>Item Price</th>
+        <th>Tax ?</th>
+        <th>Item Total</th>
+        <th>Coupon worth</th>
+        <th>Qty</th>
+        <th>Total coupon Worth</th>
+        <th>Total Price</th>
         <th>Action</th>
       </tr> 
       <tr ng-repeat="t in todos">
-        <td>{{$index}}</td>
-        <td>{{t.desc}}</td>
-        <td>{{t.price | currency}}</td>
+        <td>{{t.itemName}}</td>
+        <td>{{t.itemQty}}</td>
+        <td>{{t.itemPrice | currency}}</td>
+        <td>{{t.isTax}}</td>
+        <td>{{t.itemQty * t.itemPrice | currency}}</td>
+        <td>{{t.couponWorth | currency}}</td>
+        <td>{{t.couponQty}}</td>
+        <td>{{t.couponWorth * t.couponQty | currency}}</td>
+        <td>{{(t.itemQty * t.itemPrice) - (t.couponWorth * t.couponQty) | currency}}</td>
         <td><button class="btn btn-danger btn-xs" ng-click="removeCoupon($index)" aria-label="Remove">Delete</button></td>
       </tr>
     </table>
   </div>
 
   <!-- Total Value -->
+  <h3>Report</h3>
   <div>
-    <h3>Total = {{total | currency}}</h3>
-    <!-- Total : <span ng-bind="getTotal()">{{total}}</span> -->
+    <table class="table table-striped">
+      <tr>
+        <th>Total Item</th>
+        <th>Total Coupon</th>
+        <th>Total Saving</th>
+      </tr>
+      <tr>
+        <td>{{itemPriceTotal | currency}}</td>
+        <td>{{couponWorthTotal | currency}}</td>
+        <td>{{itemPriceTotal - couponWorthTotal | currency}}</td>
+      </tr> 
+    </table>
   </div>
 </div>

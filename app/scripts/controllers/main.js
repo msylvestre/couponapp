@@ -25,7 +25,14 @@ angular.module('yeoApp')
 
     $scope.addCoupon = function () {
       
-      var myCoupon = {desc: $scope.desc, price: $scope.price};
+      var myCoupon = {
+        itemName: $scope.itemName,
+        itemQty: $scope.itemQty,
+        itemPrice: $scope.itemPrice,
+        isTax: $scope.isTax,
+        couponWorth: $scope.couponWorth,
+        couponQty: $scope.couponQty,
+      };
       
       //window.alert("mycoupon.desc: " + myCoupon.desc);
       $scope.todos.push(myCoupon);
@@ -39,10 +46,12 @@ angular.module('yeoApp')
     };
 
     $scope.getTotal = function () {
-      $scope.total = 0;
+      $scope.itemPriceTotal = 0;
+      $scope.couponWorthTotal = 0;
 
       for (var i = 0; i < $scope.todos.length; i++) {
-        $scope.total = $scope.total + $scope.todos[i].price;
+        $scope.itemPriceTotal = $scope.itemPriceTotal + $scope.todos[i].itemPrice;
+        $scope.couponWorthTotal = $scope.couponWorthTotal + $scope.todos[i].couponWorth;
       }
 
       //$scope.total = 99.9;
