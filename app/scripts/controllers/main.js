@@ -25,6 +25,7 @@ angular.module('yeoApp')
 
     $scope.addCoupon = function () {
       
+      
       var myCoupon = {
         itemName: $scope.itemName,
         itemQty: $scope.itemQty,
