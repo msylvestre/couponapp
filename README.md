@@ -20,6 +20,7 @@ $ git clone https://github.com/msylvestre/couponapp.git
 Install the dependencies
 ```
 $ npm install
+$ bower install
 ```
 
 Start the web server locally
