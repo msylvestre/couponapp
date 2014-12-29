@@ -4,7 +4,7 @@ angular.module('yeoApp')
   .controller('MainCtrl', function ($scope, localStorageService) {
 
     var taxPercentage = 1.155;
-    var couponsInStore = localStorageService.get('coupons');
+    var couponsInStore = localStorageService.get('coupons'); // Get local storage array "Betsy.coupons"
     var editIndex = 0;
 
     // Array of item
@@ -32,26 +32,27 @@ angular.module('yeoApp')
 
       console.log('$scope.id: ' + $scope.id);
 
+      // Add new coupon
       if ($scope.id === undefined || $scope.id === '') {
         
         var myCoupon = {
           id: getNextId(),
           itemName: $scope.itemName,
-          itemQty: $scope.itemQty,
-          itemPrice: $scope.itemPrice,
+          itemQty: $scope.itemQty || 0,
+          itemPrice: $scope.itemPrice || 0,
           isTax: $scope.isTax,
-          itemPriceTotal: itemPriceTotal,
-          couponWorth: $scope.couponWorth,
-          couponQty: $scope.couponQty,
-          couponWorthTotal: $scope.couponWorth * $scope.couponQty,
-          itemTotalPriceSaving: itemPriceTotal - ($scope.couponWorth * $scope.couponQty),
+          itemPriceTotal: itemPriceTotal || 0,
+          couponWorth: $scope.couponWorth || 0,
+          couponQty: $scope.couponQty || 0,
+          couponWorthTotal: ($scope.couponWorth * $scope.couponQty) || 0,
+          itemTotalPriceSaving: (itemPriceTotal - ($scope.couponWorth * $scope.couponQty)) || 0,
         };
 
         //alert("mycoupon.desc: " + myCoupon.desc);
         $scope.coupons.push(myCoupon);
 
       }
-      else {
+      else {  // Edit Coupon
         console.log('$index and save edit: ' + editIndex);
 
           $scope.coupons[editIndex].itemName        = $scope.itemName;
@@ -65,15 +66,6 @@ angular.module('yeoApp')
           $scope.coupons[editIndex].itemTotalPriceSaving = itemPriceTotal - ($scope.couponWorth * $scope.couponQty);
 
       }
-
-      // Clean the model variable
-      $scope.id = '';
-      $scope.itemName = '';
-      $scope.itemQty = '';
-      $scope.itemPrice = '';
-      $scope.isTax = '';
-      $scope.couponWorth = '';
-      $scope.couponQty = '';
 
     };
 
@@ -122,7 +114,17 @@ angular.module('yeoApp')
         }
       }
       return currentId + 1;
-
     }
 
+    function initModel() {
+
+      // Clean the model variable
+      $scope.id = '';
+      $scope.itemName = '';
+      $scope.itemQty = 0;
+      $scope.itemPrice = 0;
+      $scope.isTax = false;
+      $scope.couponWorth = 0;
+      $scope.couponQty = 0;
+    }
   });
