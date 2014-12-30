@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module('yeoApp', [
+  .module('BetsyApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

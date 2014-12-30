@@ -1,28 +1,32 @@
 'use strict';
 
-angular.module('yeoApp')
+angular.module('BetsyApp')
   .controller('MainCtrl', function ($scope, localStorageService) {
 
     var taxPercentage = 1.155;
-    var couponsInStore = localStorageService.get('coupons'); // Get local storage array "Betsy.coupons"
+    var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
     var editIndex = 0;
 
     // Array of item
-    $scope.coupons = couponsInStore || [];
+    $scope.items = itemsInStore || [];
 
+    initItemModel();
 
-    // FUNC: Watch when change happen in the "coupons" array and update the localstorage
-    $scope.$watch('coupons', function () {
+    // FUNC: Watch when change happen in the "items" array and update the localstorage
+    $scope.$watch('items', function () {
 
       // Update the local storage
-      localStorageService.set('coupons', $scope.coupons);
+      localStorageService.set('items', $scope.items);
 
       updateTotalReport();
     }, true);
 
+    $scope.cleanForm = function() {
+      initItemModel();
+    }
 
-    // FUNC: Add a coupon to the "coupons" array by creating a jason object.  Later will insert into a db
-    $scope.saveCoupon = function () {
+    // FUNC: Add a item to the "items" array by creating a jason object.  Later will insert into a db
+    $scope.saveItem = function () {
 
       var itemPriceTotal = $scope.itemQty * $scope.itemPrice;
 
@@ -32,60 +36,64 @@ angular.module('yeoApp')
 
       console.log('$scope.id: ' + $scope.id);
 
-      // Add new coupon
+      // Add new item  if there's no id set.  And handle the first item where the id isn't defined yet
       if ($scope.id === undefined || $scope.id === '') {
         
-        var myCoupon = {
+        alert("add new");
+        var myItem = {
           id: getNextId(),
-          itemName: $scope.itemName,
-          itemQty: $scope.itemQty || 0,
-          itemPrice: $scope.itemPrice || 0,
-          isTax: $scope.isTax,
-          itemPriceTotal: itemPriceTotal || 0,
-          couponWorth: $scope.couponWorth || 0,
-          couponQty: $scope.couponQty || 0,
-          couponWorthTotal: ($scope.couponWorth * $scope.couponQty) || 0,
+          itemName:             $scope.itemName,
+          itemQty:              $scope.itemQty || 0,
+          itemPrice:            $scope.itemPrice || 0,
+          isTax:                $scope.isTax,
+          itemPriceTotal:       itemPriceTotal || 0,
+          couponWorth:          $scope.couponWorth || 0,
+          couponQty:            $scope.couponQty || 0,
+          couponWorthTotal:     ($scope.couponWorth * $scope.couponQty) || 0,
           itemTotalPriceSaving: (itemPriceTotal - ($scope.couponWorth * $scope.couponQty)) || 0,
+          itemDesc:             $scope.itemDesc,          
         };
 
-        //alert("mycoupon.desc: " + myCoupon.desc);
-        $scope.coupons.push(myCoupon);
-
+        //alert("myitem.desc: " + myItem.desc);
+        $scope.items.push(myItem);
+        initItemModel();
       }
-      else {  // Edit Coupon
+      else {  // Edit item
         console.log('$index and save edit: ' + editIndex);
 
-          $scope.coupons[editIndex].itemName        = $scope.itemName;
-          $scope.coupons[editIndex].itemQty         = $scope.itemQty;
-          $scope.coupons[editIndex].itemPrice       = $scope.itemPrice;
-          $scope.coupons[editIndex].isTax           = $scope.isTax;
-          $scope.coupons[editIndex].itemPriceTotal  = itemPriceTotal;
-          $scope.coupons[editIndex].couponWorth     = $scope.couponWorth;
-          $scope.coupons[editIndex].couponQty       = $scope.couponQty;
-          $scope.coupons[editIndex].couponWorthTotal = $scope.couponWorth * $scope.couponQty;
-          $scope.coupons[editIndex].itemTotalPriceSaving = itemPriceTotal - ($scope.couponWorth * $scope.couponQty);
-
+          $scope.items[editIndex].itemName              = $scope.itemName;
+          $scope.items[editIndex].itemQty               = $scope.itemQty;
+          $scope.items[editIndex].itemPrice             = $scope.itemPrice;
+          $scope.items[editIndex].isTax                 = $scope.isTax;
+          $scope.items[editIndex].itemPriceTotal        = itemPriceTotal;
+          $scope.items[editIndex].couponWorth           = $scope.couponWorth;
+          $scope.items[editIndex].couponQty             = $scope.couponQty;
+          $scope.items[editIndex].couponWorthTotal      = $scope.couponWorth * $scope.couponQty;
+          $scope.items[editIndex].itemTotalPriceSaving  = itemPriceTotal - ($scope.couponWorth * $scope.couponQty);
+          $scope.items[editIndex].itemDesc              = $scope.itemDesc;
       }
+
+      initItemModel();
 
     };
 
-    // FUNC: Remove a coupon from the "coupons" array.  Later will remove from the db
-    $scope.removeCoupon = function (index) {
-      $scope.coupons.splice(index, 1);
+    // FUNC: Remove a item from the "items" array.  Later will remove from the db
+    $scope.removeItem = function (index) {
+      $scope.items.splice(index, 1);
     };
 
     // FUNC: Load the detail in the view scope
-    $scope.detailCoupon = function (index) {
+    $scope.detailItem = function (index) {
 
-      editIndex = index;
-      $scope.id = $scope.coupons[index].id;
-      $scope.itemName = $scope.coupons[index].itemName;
-      $scope.itemQty = $scope.coupons[index].itemQty;
-      $scope.itemPrice = $scope.coupons[index].itemPrice;
-      $scope.isTax = $scope.coupons[index].isTax;
-      $scope.couponWorth = $scope.coupons[index].couponWorth;
-      $scope.couponQty = $scope.coupons[index].couponQty;
-
+      editIndex           = index;
+      $scope.id           = $scope.items[index].id;
+      $scope.itemName     = $scope.items[index].itemName;
+      $scope.itemQty      = $scope.items[index].itemQty;
+      $scope.itemPrice    = $scope.items[index].itemPrice;
+      $scope.isTax        = $scope.items[index].isTax;
+      $scope.couponWorth  = $scope.items[index].couponWorth;
+      $scope.couponQty    = $scope.items[index].couponQty;
+      $scope.itemDesc     = $scope.items[index].itemDesc;
     };
 
 ///////// Private Function ///////////////
@@ -94,37 +102,38 @@ angular.module('yeoApp')
       $scope.itemPriceTotal = 0;
       $scope.couponWorthTotal = 0;
 
-      for (var i = 0; i < $scope.coupons.length; i++) {
-        $scope.itemPriceTotal += $scope.coupons[i].itemPriceTotal;
-        $scope.couponWorthTotal += $scope.coupons[i].couponWorthTotal;
+      for (var i = 0; i < $scope.items.length; i++) {
+        $scope.itemPriceTotal += $scope.items[i].itemPriceTotal;
+        $scope.couponWorthTotal += $scope.items[i].couponWorthTotal;
       }
-
-    }
+    };
 
     function getTotalWithTax(price) {
       return price * taxPercentage;
-    }
+    };
 
     function getNextId() {
       var currentId = 0;
 
-      for (var i = 0; i < $scope.coupons.length; i++) {
-        if ($scope.coupons[i].id > currentId ) {
-          currentId = $scope.coupons[i].id;
+      for (var i = 0; i < $scope.items.length; i++) {
+        if ($scope.items[i].id > currentId ) {
+          currentId = $scope.items[i].id;
         }
       }
       return currentId + 1;
-    }
+    };
 
-    function initModel() {
+    function initItemModel() {
 
       // Clean the model variable
-      $scope.id = '';
-      $scope.itemName = '';
-      $scope.itemQty = 0;
-      $scope.itemPrice = 0;
-      $scope.isTax = false;
-      $scope.couponWorth = 0;
-      $scope.couponQty = 0;
-    }
+      $scope.id           = '';
+      $scope.itemName     = '';
+      $scope.itemQty      = '';
+      $scope.itemPrice    = '';
+      $scope.isTax        = false;
+      $scope.couponWorth  = '';
+      $scope.couponQty    = '';
+      $scope.itemDesc     = '';
+    };
+
   });
