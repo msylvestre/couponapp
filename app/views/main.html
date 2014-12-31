@@ -59,7 +59,21 @@
             </div>       
 
             <div class="form-group">
-              <label for="couponWorth" class="control-label col-sm-3">Description: </label>
+              <label for="pricePerItem" class="control-label col-sm-3">Price per Item: </label>
+              <div class="col-sm-3">
+                <p class="form-control-static">{{((itemQty * addTax(itemPrice, isTax)) - (couponQty * couponWorth)) / itemQty || 0 | currency}}</p>                
+              </div>
+            </div>       
+
+            <div class="form-group">
+              <label for="totalPrice" class="control-label col-sm-3">Total Price: </label>
+              <div class="col-sm-3">
+                <p class="form-control-static">{{((itemQty * addTax(itemPrice, isTax)) - (couponQty * couponWorth)) || 0 | currency}}</p>
+              </div>
+            </div>       
+
+            <div class="form-group">
+              <label for="notes" class="control-label col-sm-3">Notes: </label>
               <div class="col-sm-8">
                 <textarea class="form-control" rows="3" ng-model="itemDesc"></textarea>   
               </div>
@@ -87,17 +101,19 @@
   <div>
     <table class="table table-hover">
       <tr>
-        <th>Item Name</th>
-        <th>Item Price Total</th>
-        <th>Coupon Worth Total</th>
-        <th>Total Price</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantities</th>
+        <th>Coupon Qty</th>
+        <th>Coupon Worth</th>
         <th>Action</th>
       </tr> 
       <tr ng-repeat="t in items">
         <td><a ng-ref data-toggle="modal" data-target="#modalDetailItem" ng-click="detailItem($index)">{{t.itemName}}</a></td>
-        <td>{{t.itemPriceTotal | currency}}</td>
-        <td>{{t.couponWorthTotal | currency}}</td>
-        <td>{{t.itemTotalPriceSaving | currency}}</td>
+        <td>{{t.itemPrice | currency}}</td>
+        <td>{{t.itemQty}}</td>
+        <td>{{t.couponQty}}</td>
+        <td>{{t.couponWorth | currency}}</td>
         <td>
           <div>
             <button class="btn btn-danger btn-xs" ng-click="removeItem($index)" aria-label="Remove">Delete</button>
@@ -112,14 +128,14 @@
   <div>
     <table class="table table-striped">
       <tr>
-        <th>Total Item</th>
+        <th>Total Amount w/ Tax</th>
         <th>Total Coupon</th>
-        <th>Total Saving</th>
+        <th>Amount to pay w/ Tax</th>
       </tr>
       <tr>
-        <td>{{itemPriceTotal | currency}}</td>
-        <td>{{couponWorthTotal | currency}}</td>
-        <td>{{itemPriceTotal - couponWorthTotal | currency}}</td>
+        <td>{{itemsPriceTotal | currency}}</td>
+        <td>{{couponsWorthTotal | currency}}</td>
+        <td>{{itemsPriceTotal - couponsWorthTotal | currency}}</td>
       </tr> 
     </table>
   </div>

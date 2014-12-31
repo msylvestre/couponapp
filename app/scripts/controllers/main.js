@@ -3,7 +3,7 @@
 angular.module('BetsyApp')
   .controller('MainCtrl', function ($scope, localStorageService) {
 
-    var taxPercentage = 1.155;
+    var taxPercentage = 1.14975;
     var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
     var editIndex = 0;
 
@@ -28,30 +28,22 @@ angular.module('BetsyApp')
     // FUNC: Add a item to the "items" array by creating a jason object.  Later will insert into a db
     $scope.saveItem = function () {
 
-      var itemPriceTotal = $scope.itemQty * $scope.itemPrice;
-
-      if ($scope.isTax) {
-        itemPriceTotal = getTotalWithTax(itemPriceTotal);
-      }
-
-      console.log('$scope.id: ' + $scope.id);
+      console.log('SaveItem() $scope.id: ' + $scope.id);
 
       // Add new item  if there's no id set.  And handle the first item where the id isn't defined yet
       if ($scope.id === undefined || $scope.id === '') {
         
-        alert("add new");
         var myItem = {
           id: getNextId(),
           itemName:             $scope.itemName,
           itemQty:              $scope.itemQty || 0,
           itemPrice:            $scope.itemPrice || 0,
           isTax:                $scope.isTax,
-          itemPriceTotal:       itemPriceTotal || 0,
+          itemPriceTotal:       $scope.addTax($scope.itemPrice) || 0,
           couponWorth:          $scope.couponWorth || 0,
           couponQty:            $scope.couponQty || 0,
           couponWorthTotal:     ($scope.couponWorth * $scope.couponQty) || 0,
-          itemTotalPriceSaving: (itemPriceTotal - ($scope.couponWorth * $scope.couponQty)) || 0,
-          itemDesc:             $scope.itemDesc,          
+          itemNotes:            $scope.itemNotes,          
         };
 
         //alert("myitem.desc: " + myItem.desc);
@@ -65,16 +57,14 @@ angular.module('BetsyApp')
           $scope.items[editIndex].itemQty               = $scope.itemQty;
           $scope.items[editIndex].itemPrice             = $scope.itemPrice;
           $scope.items[editIndex].isTax                 = $scope.isTax;
-          $scope.items[editIndex].itemPriceTotal        = itemPriceTotal;
+          $scope.items[editIndex].itemPriceTotal        = $scope.addTax($scope.itemPrice);
           $scope.items[editIndex].couponWorth           = $scope.couponWorth;
           $scope.items[editIndex].couponQty             = $scope.couponQty;
           $scope.items[editIndex].couponWorthTotal      = $scope.couponWorth * $scope.couponQty;
-          $scope.items[editIndex].itemTotalPriceSaving  = itemPriceTotal - ($scope.couponWorth * $scope.couponQty);
-          $scope.items[editIndex].itemDesc              = $scope.itemDesc;
+          $scope.items[editIndex].itemNotes             = $scope.itemNotes;
       }
 
       initItemModel();
-
     };
 
     // FUNC: Remove a item from the "items" array.  Later will remove from the db
@@ -84,7 +74,6 @@ angular.module('BetsyApp')
 
     // FUNC: Load the detail in the view scope
     $scope.detailItem = function (index) {
-
       editIndex           = index;
       $scope.id           = $scope.items[index].id;
       $scope.itemName     = $scope.items[index].itemName;
@@ -93,23 +82,26 @@ angular.module('BetsyApp')
       $scope.isTax        = $scope.items[index].isTax;
       $scope.couponWorth  = $scope.items[index].couponWorth;
       $scope.couponQty    = $scope.items[index].couponQty;
-      $scope.itemDesc     = $scope.items[index].itemDesc;
+      $scope.itemNotes     = $scope.items[index].itemNotes;
+    };
+
+    $scope.addTax = function(itemPrice, isTax) {
+      if (isTax)
+        return itemPrice * taxPercentage;
+
+      return itemPrice;
     };
 
 ///////// Private Function ///////////////
 
     function updateTotalReport() {
-      $scope.itemPriceTotal = 0;
-      $scope.couponWorthTotal = 0;
+      $scope.itemsPriceTotal = 0;
+      $scope.couponsWorthTotal = 0;
 
       for (var i = 0; i < $scope.items.length; i++) {
-        $scope.itemPriceTotal += $scope.items[i].itemPriceTotal;
-        $scope.couponWorthTotal += $scope.items[i].couponWorthTotal;
+        $scope.itemsPriceTotal += $scope.items[i].itemPriceTotal;
+        $scope.couponsWorthTotal += $scope.items[i].couponWorthTotal;
       }
-    };
-
-    function getTotalWithTax(price) {
-      return price * taxPercentage;
     };
 
     function getNextId() {
