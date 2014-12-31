@@ -31,6 +31,11 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+.imgResize img {
+    width: 10%;
+    height: auto;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {

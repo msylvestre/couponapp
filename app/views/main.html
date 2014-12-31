@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-
+ 
   <div>
     <h4>Item & Coupon list
       <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#modalDetailItem">
@@ -109,7 +109,7 @@
         <th>Action</th>
       </tr> 
       <tr ng-repeat="t in items">
-        <td><a ng-ref data-toggle="modal" data-target="#modalDetailItem" ng-click="detailItem($index)">{{t.itemName}}</a></td>
+        <td><a ng-ref data-toggle="modal" data-target="#modalDetailItem" ng-click="getDetailItem($index)">{{t.itemName}}</a></td>
         <td>{{t.itemPrice | currency}}</td>
         <td>{{t.itemQty}}</td>
         <td>{{t.couponQty}}</td>
@@ -135,7 +135,7 @@
       <tr>
         <td>{{itemsPriceTotal | currency}}</td>
         <td>{{couponsWorthTotal | currency}}</td>
-        <td>{{itemsPriceTotal - couponsWorthTotal | currency}}</td>
+        <td>{{amountToPay | currency}}</td>
       </tr> 
     </table>
   </div>
