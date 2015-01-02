@@ -5,6 +5,10 @@ Prototype of a coupon management app in node.js
 
 ### Installation & Run Instruction
 
+#### Pre-requiste
+- node.js is installed (http://nodejs.org/)
+- Git is installed (http://git-scm.com)
+
 Open command line
 Create a directory and go in it
 ```
