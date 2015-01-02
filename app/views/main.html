@@ -61,14 +61,14 @@
             <div class="form-group">
               <label for="pricePerItem" class="control-label col-sm-3">Price per Item: </label>
               <div class="col-sm-3">
-                <p class="form-control-static">{{((itemQty * addTax(itemPrice, isTax)) - (couponQty * couponWorth)) / itemQty || 0 | currency}}</p>                
+                <p class="form-control-static">{{getPricePerItem() | currency}}</p>                
               </div>
             </div>       
 
             <div class="form-group">
               <label for="totalPrice" class="control-label col-sm-3">Total Price: </label>
               <div class="col-sm-3">
-                <p class="form-control-static">{{((itemQty * addTax(itemPrice, isTax)) - (couponQty * couponWorth)) || 0 | currency}}</p>
+                <p class="form-control-static">{{getTotalPrice() || 0 | currency}}</p>
               </div>
             </div>       
 
@@ -133,9 +133,9 @@
         <th>Amount to pay w/ Tax</th>
       </tr>
       <tr>
-        <td>{{itemsPriceTotal | currency}}</td>
-        <td>{{couponsWorthTotal | currency}}</td>
-        <td>{{amountToPay | currency}}</td>
+        <td>{{getTotalItemsPrice() | currency}}</td>
+        <td>{{getTotalCouponsWorth() | currency}}</td>
+        <td>{{getTotalAmountToPay() | currency}}</td>
       </tr> 
     </table>
   </div>

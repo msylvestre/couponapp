@@ -15,13 +15,16 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  function addItem(tax, itemPrice, itemQty){
+  function addItem(tax, itemPrice, itemQty, couponQty, couponWorth){
       scope.id = '';
       scope.itemName = 'Test Item';
       scope.itemQty = itemPrice;
       scope.itemPrice = itemQty;
+      scope.couponQty = couponQty;
+      scope.couponWorth = couponWorth;
       scope.isTax = tax || false;
       scope.saveItem();
+
   }
 
   describe('Initial State', function () {
@@ -46,8 +49,8 @@ describe('Controller: MainCtrl', function () {
     });
 
     it('Should get report value equal to 0', function() {
-      expect(scope.itemsPriceTotal).toBe(0);
-      expect(scope.couponsWorthTotal).toBe(0);
+      expect(scope.getTotalItemsPrice()).toBe(0);
+      expect(scope.getTotalCouponsWorth()).toBe(0);
 
       dump('Should be report value equal to 0 : SUCCESS');
     });
@@ -94,48 +97,88 @@ describe('Controller: MainCtrl', function () {
 
   describe('View Item Detail Test Suite', function () {
     
-    it('Should be a right amount of tax if item is taxable',function() {
-      
-      // No Tax
-      addItem(false, 2, 5);
-      expect(scope.items[0].itemPriceTotal).toBe(10);
-
-      // With tax
-      addItem(true, 2, 5);
-      expect(scope.items[1].itemPriceTotal).toBe(10 * scope.taxPercentage);
-
-      dump('Should be a right amount of tax if item is taxable');
-    });
-
     it('Should be a right "Price per Item" in the Add/Edit item form',function() {
 
-      // 3 item @ 5$ = 5$ per item
-      
-      // 3 item @ 5$ - 2 coupon @ 1$ = 4.33$ per item
+      // Should be 0 at the beginning
+      expect(scope.getPricePerItem()).toBe(0);
 
-      dump('');
+      // 3 item @ 5$ = 5$ per item
+      scope.itemQty = 3;
+      scope.itemPrice = 5;
+      expect(scope.getPricePerItem()).toBe(5);
+
+      // 3 item @ 5$ - 2 coupon @ 1$ = 4.33$ per item
+      scope.couponQty = 2;
+      scope.couponWorth = 1;
+      expect(scope.getPricePerItem()).toBe((13/3));
+
+      // (3 item @ 5$ + tax) - 2 coupon @ 1$ = 4.33$ per item
+      scope.isTax = true;
+      var x = (((15 * scope.taxPercentage) - 2) / 3);
+      expect(scope.getPricePerItem()).toBe(x);
+
+      dump('Should be a right "Price per Item" in the Add/Edit item form');
     });
 
     it('Should be a right "Total Price" in the Add/Edit item form',function() {
 
-      dump('');
+      // Should be 0 without data
+      expect(scope.getTotalPrice()).toBe(0);
+
+      // 2 items @ 5$ = 10$
+      scope.itemQty = 2;
+      scope.itemPrice = 5;
+      expect(scope.getTotalPrice()).toBe(10);
+
+      // 2 items @ 5$ + tax = 10$
+      scope.isTax = true
+      expect(scope.getTotalPrice()).toBe(10 * scope.taxPercentage);
+
+      // 2 items @ 5$ - 2 coupon @ 1 = 8
+      scope.isTax = false;
+      scope.couponQty = 2;
+      scope.couponWorth = 1;
+      expect(scope.getTotalPrice()).toBe(8);
+
+      dump('Should be a right "Total Price" in the Add/Edit item form');
     });
   });
 
   describe('Report Test Suite', function () {
     it('Should be a right "Total Amount with Tax" in the report',function() {
 
-      dump('');
+      // Be sure it equal 0 if empty
+      expect(scope.getTotalItemsPrice()).toBe(0);
+
+      addItem(false,2,5);
+      addItem(false,3,10);
+      expect(scope.getTotalItemsPrice()).toBe(40);
+
+      dump('Should be a right "Total Amount with Tax" in the report');
     });
 
     it('Should be a right "Total Coupon" in the report',function() {
       
-      dump('');
+      // Be sure it equal 0 if empty
+      expect(scope.getTotalCouponsWorth()).toBe(0);
+
+      addItem(false,2,5,2,1);
+      addItem(false,3,10,2,1);
+      expect(scope.getTotalCouponsWorth()).toBe(4);
+      
+      dump('Should be a right "Total Coupon" in the report');
     });
 
     it('Should be a right "Amount to pay with Tax" in the report',function() {
+      
+      // Be sure it equal 0 if empty
+      expect(scope.getTotalAmountToPay()).toBe(0);
+
+      addItem(false,2,5);
+      addItem(false,3,10);
+      expect(scope.getTotalAmountToPay()).toBe(40);
     
-      dump('');
+      dump('Should be a right "Amount to pay with Tax" in the report');
     });
   });
 

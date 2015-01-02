@@ -3,16 +3,6 @@
 angular.module('BetsyApp')
   .controller('MainCtrl', function ($scope, localStorageService) {
 
-    $scope.taxPercentage = 1.14975;
-    var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
-    var editIndex = 0;
-
-    // Array of item
-    $scope.items = itemsInStore || [];
-
-    initItemModel();
-    updateTotalReport();
-
     // FUNC: Watch when change happen in the "items" array and update the localstorage
     $scope.$watch('items', function () {
 
@@ -38,7 +28,6 @@ angular.module('BetsyApp')
           itemQty:              $scope.itemQty || 0,
           itemPrice:            $scope.itemPrice || 0,
           isTax:                $scope.isTax,
-          itemPriceTotal:       $scope.addTax($scope.itemPrice, $scope.isTax) * $scope.itemQty || 0,
           couponWorth:          $scope.couponWorth || 0,
           couponQty:            $scope.couponQty || 0,
           couponWorthTotal:     ($scope.couponWorth * $scope.couponQty) || 0,
@@ -54,7 +43,6 @@ angular.module('BetsyApp')
           $scope.items[editIndex].itemQty               = $scope.itemQty;
           $scope.items[editIndex].itemPrice             = $scope.itemPrice;
           $scope.items[editIndex].isTax                 = $scope.isTax;
-          $scope.items[editIndex].itemPriceTotal        = $scope.addTax($scope.itemPrice, $scope.isTax) * $scope.itemQty;
           $scope.items[editIndex].couponWorth           = $scope.couponWorth;
           $scope.items[editIndex].couponQty             = $scope.couponQty;
           $scope.items[editIndex].couponWorthTotal      = $scope.couponWorth * $scope.couponQty;
@@ -90,19 +78,47 @@ angular.module('BetsyApp')
       return itemPrice;
     };
 
-///////// Private Function ///////////////
+    $scope.getTotalPrice = function() {
+      var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - ($scope.couponQty * $scope.couponWorth));
 
-    function updateTotalReport() {
-      $scope.itemsPriceTotal = 0;
-      $scope.couponsWorthTotal = 0;
+      return x || 0;
+    }
+
+    $scope.getPricePerItem = function() {
+      var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - ($scope.couponQty * $scope.couponWorth)) / $scope.itemQty; 
+
+      return x || 0;
+    }
+
+
+    $scope.getTotalItemsPrice = function() {
+      var itemsPriceTotal = 0;
 
       for (var i = 0; i < $scope.items.length; i++) {
-        $scope.itemsPriceTotal += $scope.items[i].itemPriceTotal;
-        $scope.couponsWorthTotal += $scope.items[i].couponWorthTotal;
+        itemsPriceTotal += $scope.addTax($scope.items[i].itemQty * $scope.items[i].itemPrice, $scope.items[i].isTax);
+      }
+
+      return itemsPriceTotal || 0;
+    }
+
+    $scope.getTotalCouponsWorth = function() {
+      var couponsWorthTotal = 0;
+
+      for (var i = 0; i < $scope.items.length; i++) {
+        couponsWorthTotal += $scope.items[i].couponWorthTotal;
       }
 
       $scope.amountToPay = $scope.itemsPriceTotal - $scope.couponsWorthTotal;
+    
+      return couponsWorthTotal || 0;
+
     }
+
+    $scope.getTotalAmountToPay = function() {
+      return $scope.getTotalItemsPrice() - $scope.getTotalCouponsWorth() || 0;
+    }
+
+  ///////// Private Function ///////////////
 
     function getNextId() {
       var currentId = 0;
@@ -127,5 +143,15 @@ angular.module('BetsyApp')
       $scope.couponQty    = '';
       $scope.itemNotes    = '';
     }
+
+    $scope.taxPercentage = 1.14975;
+    var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
+    var editIndex = 0;
+
+    // Array of item
+    $scope.items = itemsInStore || [];
+
+    initItemModel();
+    $scope.getTotalItemsPrice();
 
   });
