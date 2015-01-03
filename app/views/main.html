@@ -23,21 +23,26 @@
               </div>
             </div>
 
+           <!--  
+              <select class="form-control" ng-model="selectedTestAccount" ng-options="item.Id as item.Name for item in getTestAccounts()">
+                  <option value="">Select Account</option>
+              </select>            
+            -->
             <div class="form-group"> 
               <label for="itemName" class="control-label col-sm-3">Category: </label>
               <div class="col-sm-7">
                 <select class="form-control">
+                  <option>Alcohols</option>
+                  <option>Bakery</option>
+                  <option>Beverages</option>
+                  <option>Cleaning supplies</option>
+                  <option>Dairies</option>
+                  <option>Dry groceries</option>
+                  <option>Frozen foods</option>
                   <option>Fruits</option>
                   <option>Fruits/vegetables</option>
-                  <option>Bakery</option>
                   <option>Meats/fishes</option>
-                  <option>Dry groceries</option>
-                  <option>Cleaning supplies</option>
-                  <option>Frozen foods</option>
-                  <option>Dairies</option>
                   <option>Snacks</option>
-                  <option>Beverages</option>
-                  <option>Alcohols</option>
                 </select>
               </div>
               <button class="btn btn-primary btn-sm" ng-click="" aria-label="Edit">Edit</button>
@@ -94,19 +99,36 @@
             </div>       
 
             <div class="form-group"> 
-              <label for="itemName" class="control-label col-sm-3">Location: </label>
-              <div class="col-sm-7">
-                <select class="form-control">
-                  <option>Loblaw</option>
-                  <option>Provigo</option>
-                  <option>Steinburg</option>
-                  <option>Walmart</option>
-                  <option>Magasin à une piastre</option>
-                </select>
+              <label for="Location" class="control-label col-sm-3">Location: </label>
+                <div class="col-sm-7">
+                  <select class="form-control">
+                    <option>Brunet</option>
+                    <option>Canadian Tire</option>
+                    <option>Familiprix</option>
+                    <option>IGA</option>
+                    <option>InterMarché</option>
+                    <option>Jean Coutu</option>
+                    <option>Loblaw's</option>
+                    <option>Marché C&T</option>
+                    <option>Marché OMNI</option>
+                    <option>Marché Tradition</option>
+                    <option>Maxi</option>
+                    <option>Métro</option>
+                    <option>Pharmaprix</option>
+                    <option>Provigo</option>
+                    <option>Proxim</option>
+                    <option>Richelieu</option>
+                    <option>Super C</option>
+                    <option>Supermarché PA</option>
+                    <option>Target</option>
+                    <option>Tigre Géant</option>
+                    <option>Uniprix</option>
+                    <option>Walmart</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary btn-sm" ng-click="" aria-label="Edit">Edit</button>
               </div>
-              <button class="btn btn-primary btn-sm" ng-click="" aria-label="Edit">Edit</button>
-            </div>
-
+          
             <div class="form-group">
               <label for="notes" class="control-label col-sm-3">Notes: </label>
               <div class="col-sm-8">
@@ -123,8 +145,8 @@
       </div>
     </div>
   </div>
- 
-  <div>
+
+   <div>
     <h4>Item & Coupon list
       <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#modalDetailItem">
         Add Item
