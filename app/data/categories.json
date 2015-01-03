@@ -1,0 +1,13 @@
+[
+  { "Id":1, "Name":"Alcohols" },
+  { "Id":2, "Name":"Bakery"},
+  { "Id":3, "Name":"Beverages" },
+  { "Id":4, "Name":"Cleaning supplies" },
+  { "Id":5, "Name":"Dairies" },
+  { "Id":6, "Name":"Dry groceries" },
+  { "Id":7, "Name":"Frozen foods" },
+  { "Id":8, "Name":"Fruits" },
+  { "Id":9, "Name":"Fruits / Vegetables" },
+  { "Id":10, "Name":"Meats/fishes" },
+  { "Id":11, "Name":"Snacks" }
+]

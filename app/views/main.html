@@ -1,5 +1,7 @@
 <div class="container">
 
+<button type="button" class="btn btn-danger" ng-click="debugButton()">DEBUG !!</button>
+
   <!-- Modal Add item-->
   <div class="modal fade" id="modalDetailItem" tabindex="-1" role="dialog" aria-labelledby="modalDetailItem" aria-hidden="true">
     <div class="modal-dialog">
@@ -19,31 +21,16 @@
             <div class="form-group"> 
               <label for="itemName" class="control-label col-sm-3">Item Name: </label>
               <div class="col-sm-8">
-                <input type="text" ng-model="itemName" class="form-control">
+                <input type="text" ng-model="itemName" class="form-control" >
               </div>
             </div>
 
-           <!--  
-              <select class="form-control" ng-model="selectedTestAccount" ng-options="item.Id as item.Name for item in getTestAccounts()">
-                  <option value="">Select Account</option>
-              </select>            
-            -->
             <div class="form-group"> 
               <label for="itemName" class="control-label col-sm-3">Category: </label>
-              <div class="col-sm-7">
-                <select class="form-control">
-                  <option>Alcohols</option>
-                  <option>Bakery</option>
-                  <option>Beverages</option>
-                  <option>Cleaning supplies</option>
-                  <option>Dairies</option>
-                  <option>Dry groceries</option>
-                  <option>Frozen foods</option>
-                  <option>Fruits</option>
-                  <option>Fruits/vegetables</option>
-                  <option>Meats/fishes</option>
-                  <option>Snacks</option>
-                </select>
+              <div class="col-sm-7" ng-controller="ListCtrl">
+              <select class="form-control" ng-model="selectedCategory" ng-options="category.Id as category.Name for category in categories">
+                  <option value="">Select Account</option>
+              </select>            
               </div>
               <button class="btn btn-primary btn-sm" ng-click="" aria-label="Edit">Edit</button>
             </div>

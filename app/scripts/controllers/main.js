@@ -125,12 +125,9 @@ angular.module('BetsyApp')
       return $scope.getTotalItemsPrice() - $scope.getTotalCouponsWorth() || 0;
     };
 
-    $scope.getTestAccounts = function() {
-      $scope.selectedTestAccount = null;
-      $scope.testAccounts = [{Id: 1, Name:'walmart'}, {Id: 2, Name:'woolco'}];
-    
-      return $scope.testAccounts;
-    };
+    $scope.debugButton = function() {
+      console.log('selectedCategory : ' + $scope.selectedCategory);
+    }
 
   ///////// Private Function ///////////////
 
@@ -160,5 +157,5 @@ angular.module('BetsyApp')
 
     $scope.cleanForm();
     $scope.getTotalItemsPrice();
-
+    //$scope.loadCategories();
   });
