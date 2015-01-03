@@ -9,11 +9,19 @@ angular.module('BetsyApp')
       // Update the local storage
       localStorageService.set('items', $scope.items);
 
-      updateTotalReport();
+      updateReportData();
     }, true);
 
     $scope.cleanForm = function() {
-      initItemModel();
+      // Clean the model variable
+      $scope.id           = '';
+      $scope.itemName     = '';
+      $scope.itemQty      = '';
+      $scope.itemPrice    = '';
+      $scope.isTax        = false;
+      $scope.couponWorth  = '';
+      $scope.couponQty    = '';
+      $scope.itemNotes    = '';
     };
 
     // FUNC: Add a item to the "items" array by creating a jason object.  Later will insert into a db
@@ -49,7 +57,7 @@ angular.module('BetsyApp')
           $scope.items[editIndex].itemNotes             = $scope.itemNotes;
       }
 
-      initItemModel();
+      $scope.cleanForm();
     };
 
     // FUNC: Remove a item from the "items" array.  Later will remove from the db
@@ -82,13 +90,13 @@ angular.module('BetsyApp')
       var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - ($scope.couponQty * $scope.couponWorth));
 
       return x || 0;
-    }
+    };
 
     $scope.getPricePerItem = function() {
       var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - ($scope.couponQty * $scope.couponWorth)) / $scope.itemQty; 
 
       return x || 0;
-    }
+    };
 
 
     $scope.getTotalItemsPrice = function() {
@@ -99,7 +107,7 @@ angular.module('BetsyApp')
       }
 
       return itemsPriceTotal || 0;
-    }
+    };
 
     $scope.getTotalCouponsWorth = function() {
       var couponsWorthTotal = 0;
@@ -111,12 +119,11 @@ angular.module('BetsyApp')
       $scope.amountToPay = $scope.itemsPriceTotal - $scope.couponsWorthTotal;
     
       return couponsWorthTotal || 0;
-
-    }
+    };
 
     $scope.getTotalAmountToPay = function() {
       return $scope.getTotalItemsPrice() - $scope.getTotalCouponsWorth() || 0;
-    }
+    };
 
   ///////// Private Function ///////////////
 
@@ -131,17 +138,10 @@ angular.module('BetsyApp')
       return currentId + 1;
     }
 
-    function initItemModel() {
-
-      // Clean the model variable
-      $scope.id           = '';
-      $scope.itemName     = '';
-      $scope.itemQty      = '';
-      $scope.itemPrice    = '';
-      $scope.isTax        = false;
-      $scope.couponWorth  = '';
-      $scope.couponQty    = '';
-      $scope.itemNotes    = '';
+    function updateReportData() {
+      $scope.getTotalItemsPrice();
+      $scope.getTotalCouponsWorth();
+      $scope.getTotalAmountToPay();
     }
 
     $scope.taxPercentage = 1.14975;
@@ -151,7 +151,7 @@ angular.module('BetsyApp')
     // Array of item
     $scope.items = itemsInStore || [];
 
-    initItemModel();
+    $scope.cleanForm();
     $scope.getTotalItemsPrice();
 
   });
