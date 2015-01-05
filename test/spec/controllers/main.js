@@ -38,20 +38,20 @@ describe('Controller: MainCtrl', function () {
       expect(scope.couponQty).toBe('');
       expect(scope.itemNotes).toBe('');
 
-      dump('Should be an empty Item data  when the app start');
+      //dump('Should be an empty Item data  when the app start');
     });
 
     it('Should be an empty items[] when the app start', function() {
       expect(scope.items.length).toBe(0);
 
-      dump('Should be an empty items[] when the app start');
+      //dump('Should be an empty items[] when the app start');
     });
 
     it('Should get report value equal to 0', function() {
       expect(scope.getTotalItemsPrice()).toBe(0);
       expect(scope.getTotalCouponsWorth()).toBe(0);
 
-      dump('Should be report value equal to 0');
+      //dump('Should be report value equal to 0');
     });
   });
 
@@ -63,7 +63,7 @@ describe('Controller: MainCtrl', function () {
       addItem();
       expect(scope.items.length).toBe(2);
     
-      dump('Should be 2 item in the array after saveItem() twice');
+      //dump('Should be 2 item in the array after saveItem() twice');
     });
 
     it('Should be 0 item in the array after removeItem()',function() {
@@ -75,7 +75,7 @@ describe('Controller: MainCtrl', function () {
       scope.removeItem(0);
       expect(scope.items.length).toBe(0);
     
-      dump('Should be 0 item in the array after removeItem()');
+      //dump('Should be 0 item in the array after removeItem()');
     });
 
     it('Should be a modified title after editing an item',function() {
@@ -90,7 +90,7 @@ describe('Controller: MainCtrl', function () {
       scope.saveItem();
       expect(scope.items[0].itemName).toBe('Modified Item');      
 
-      dump('Should be a modified title after editing an item');
+      //dump('Should be a modified title after editing an item');
     });
   }); 
 
@@ -116,7 +116,7 @@ describe('Controller: MainCtrl', function () {
       var x = (((15 * scope.taxPercentage) - 2) / 3);
       expect(scope.getPricePerItem()).toBe(x);
 
-      dump('Should be a right "Price per Item" in the Add/Edit item form');
+      //dump('Should be a right "Price per Item" in the Add/Edit item form');
     });
 
     it('Should be a right "Total Price" in the Add/Edit item form',function() {
@@ -139,14 +139,14 @@ describe('Controller: MainCtrl', function () {
       scope.couponWorth = 1;
       expect(scope.getTotalPrice()).toBe(8);
 
-      dump('Should be a right "Total Price" in the Add/Edit item form');
+      //dump('Should be a right "Total Price" in the Add/Edit item form');
     });
 
     it('Should be a right tax amount when tax is applicable',function() {    
       expect(scope.addTax(10,false) ).toBe(10);
       expect(scope.addTax(10,true) ).toBe(10 * scope.taxPercentage);
 
-      dump('Should be a right tax amount when tax is applicable');
+      //dump('Should be a right tax amount when tax is applicable');
     });
   });
 
@@ -160,7 +160,7 @@ describe('Controller: MainCtrl', function () {
       addItem(false,3,10);
       expect(scope.getTotalItemsPrice()).toBe(40);
 
-      dump('Should be a right "Total Amount with Tax" in the report');
+      //dump('Should be a right "Total Amount with Tax" in the report');
     });
 
     it('Should be a right "Total Coupon" in the report',function() {
@@ -170,9 +170,8 @@ describe('Controller: MainCtrl', function () {
 
       addItem(false,2,5,2,1);
       addItem(false,3,10,2,1);
-      expect(scope.getTotalCouponsWorth()).toBe(4);
-      
-      dump('Should be a right "Total Coupon" in the report');
+      expect(scope.getTotalCouponsWorth()).toBe(4);      
+      //dump('Should be a right "Total Coupon" in the report');
     });
 
     it('Should be a right "Amount to pay with Tax" in the report',function() {
@@ -184,7 +183,7 @@ describe('Controller: MainCtrl', function () {
       addItem(false,3,10);
       expect(scope.getTotalAmountToPay()).toBe(40);
     
-      dump('Should be a right "Amount to pay with Tax" in the report');
+      //dump('Should be a right "Amount to pay with Tax" in the report');
     });
   });
 

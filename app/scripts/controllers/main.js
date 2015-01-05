@@ -9,7 +9,7 @@ angular.module('BetsyApp')
       // Update the local storage
       localStorageService.set('items', $scope.items);
 
-      updateReportData();
+      updateReportData(); 
     }, true);
 
     $scope.cleanForm = function() {
@@ -129,7 +129,7 @@ angular.module('BetsyApp')
       console.log('selectedCategory : ' + $scope.selectedCategory);
     }
 
-  ///////// Private Function ///////////////
+  /////////////////////////////////////////  Private function /////////////////////////////////////////
 
     function getNextId() {
       var currentId = 0;
@@ -147,6 +147,8 @@ angular.module('BetsyApp')
       $scope.getTotalCouponsWorth();
       $scope.getTotalAmountToPay();
     }
+
+/////////////////////////////////////////  Initialize /////////////////////////////////////////
 
     $scope.taxPercentage = 1.14975;
     var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"

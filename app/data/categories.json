@@ -1,13 +1,13 @@
 [
-  { "Id":1, "Name":"Alcohols" },
-  { "Id":2, "Name":"Bakery"},
-  { "Id":3, "Name":"Beverages" },
-  { "Id":4, "Name":"Cleaning supplies" },
-  { "Id":5, "Name":"Dairies" },
-  { "Id":6, "Name":"Dry groceries" },
-  { "Id":7, "Name":"Frozen foods" },
-  { "Id":8, "Name":"Fruits" },
-  { "Id":9, "Name":"Fruits / Vegetables" },
-  { "Id":10, "Name":"Meats/fishes" },
-  { "Id":11, "Name":"Snacks" }
+  { "id":1, "categoryName":"Alcohols" },
+  { "id":2, "categoryName":"Bakery"},
+  { "id":3, "categoryName":"Beverages" },
+  { "id":4, "categoryName":"Cleaning supplies" },
+  { "id":5, "categoryName":"Dairies" },
+  { "id":6, "categoryName":"Dry groceries" },
+  { "id":7, "categoryName":"Frozen foods" },
+  { "id":8, "categoryName":"Fruits" },
+  { "id":9, "categoryName":"Fruits / Vegetables" },
+  { "id":10, "categoryName":"Meats/fishes" },
+  { "id":11, "categoryName":"Snacks" }
 ]
