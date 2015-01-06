@@ -1,0 +1,13 @@
+[
+  { "id":1, "categoryName":"Alcohols" },
+  { "id":2, "categoryName":"Bakery"},
+  { "id":3, "categoryName":"Beverages" },
+  { "id":4, "categoryName":"Cleaning supplies" },
+  { "id":5, "categoryName":"Dairies" },
+  { "id":6, "categoryName":"Dry groceries" },
+  { "id":7, "categoryName":"Frozen foods" },
+  { "id":8, "categoryName":"Fruits" },
+  { "id":9, "categoryName":"Fruits / Vegetables" },
+  { "id":10, "categoryName":"Meats/fishes" },
+  { "id":11, "categoryName":"Snacks" }
+]
