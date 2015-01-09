@@ -42,7 +42,6 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
 	  localStorageService.set('userCategories', $scope.userCategories);	   
 	}, true);
 
-
 	$scope.cleanCategoryModal = function() {
 		$scope.categoryName = null;
 	};
@@ -62,7 +61,6 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
 		}
 
     CategoriesData.removeCategory(id);
-		
 	};
 
 	$scope.addCategory = function() {
@@ -121,11 +119,7 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
   // Initialize the array of user categories if the local storage is empty
   $scope.userCategories = storedUserCategories || [];
   
-  //console.log('userCategories');
-  //console.log($scope.userCategories);
-
   $scope.readJson();
 
 	$scope.cleanCategoryModal();
-
 });

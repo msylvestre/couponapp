@@ -140,7 +140,7 @@ angular.module('BetsyApp')
       console.log('selectedCategory : ' + $scope.selectedCategory);
     };
 
-  /////////////////////////////////////////  Private function /////////////////////////////////////////
+    /////////////////////////////////////////  Private function /////////////////////////////////////////
 
     function getNextId() {
       var currentId = 0;
@@ -159,59 +159,10 @@ angular.module('BetsyApp')
       $scope.getTotalAmountToPay();
     }
 
-      $scope.cleanCategoryModal = function() {
-    $scope.categoryName = null;
-  };
-
-  $scope.removeCategory = function(id) {
-
-    var loop = true;
-    var i = 0;
-
-    while (loop){
-      
-      if ($scope.userCategories[i].id === id ) {
-        $scope.userCategories.splice(i, 1);
-        loop = false;
-      }
-      i ++;
-    }
-    
-  };
-
-  $scope.addCategory = function() {
-
-    var myCategory = {
-           id:            $scope.getNextId(),
-           categoryName:  $scope.categoryName,
-         };
-
-    //alert("myitem.desc: " + myItem.desc);
-    $scope.userCategories.push(myCategory);  // Array of user category that is saved to local storage
-    
-
-    // The form category list is not updated on the UI after adding a new category.
-    // See example here : https://docs.angularjs.org/api/ng/directive/select
-    $scope.categories.push(myCategory);  // Push the new category to the current list use in the UI
-    
-    $scope.cleanCategoryModal();
-  };
-
-  $scope.getNextId = function() {
-    var currentId = 0;
-
-    for (var i = 0; i < $scope.userCategories.length; i++) {
-      if ($scope.userCategories[i].id > currentId ) {
-        currentId = $scope.userCategories[i].id;
-      }
-    }
-    return currentId + 1;
-  };
-
-/////////////////////////////////////////  Private function ///////////////////////////////////////// 
+    /////////////////////////////////////////  Private function ///////////////////////////////////////// 
 
 
-/////////////////////////////////////////  Initialize /////////////////////////////////////////
+    /////////////////////////////////////////  Initialize /////////////////////////////////////////
 
     $scope.taxPercentage = 1.14975;
     var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
@@ -222,8 +173,4 @@ angular.module('BetsyApp')
 
     $scope.cleanForm();
     $scope.getTotalItemsPrice();
-    //$scope.loadCategories();
-
-     //$scope.categories = CategoriesData.getCategories();
-
   });
