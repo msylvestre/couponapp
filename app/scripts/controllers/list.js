@@ -1,6 +1,40 @@
+'use strict';
+
 var App = angular.module('BetsyApp');
 
-App.controller('ListCtrl', function($scope, $http, localStorageService) {
+App.factory('CategoriesData', function(){
+    var categoriesData = [];
+
+    return {
+        getCategories: function () {
+            return categoriesData;
+        },
+        setCategories: function (cat) {
+            categoriesData = cat;
+        },
+        addCategory: function (cat) {
+          categoriesData.push(cat);
+        },
+        removeCategory: function(id){
+
+          // TODO : Refactor the Factory... not sure it's a best practice to have logic here.  Anyway, it should go with the PostgreSQL integration
+          var loop = true;
+          var i = 0;
+
+          while (loop){
+            
+            if (categoriesData[i].id === id ) {
+              categoriesData.splice(i, 1);
+              loop = false;
+            }
+            i ++;
+          }
+
+        }
+    };
+});
+
+App.controller('ListCtrl', function($scope, $http, localStorageService, CategoriesData) {
   
 	$scope.$watch('userCategories', function () {
 
@@ -26,6 +60,8 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
       }
       i ++;
 		}
+
+    CategoriesData.removeCategory(id);
 		
 	};
 
@@ -36,17 +72,11 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
 	         categoryName: 	$scope.categoryName,
 	       };
 
-    //alert("myitem.desc: " + myItem.desc);
-    $scope.userCategories.push(myCategory);  // Array of user category that is saved to local storage
+    // Array of user category that is saved to local storage.  Local Storage updated each time due to the "watch"
+    $scope.userCategories.push(myCategory);  
     
-
-    // The form category list is not updated on the UI after adding a new category.
-    // See example here : https://docs.angularjs.org/api/ng/directive/select
-    $scope.categories.push(myCategory);  // Push the new category to the current list use in the UI
-
-
-    console.log('$scope.categories');
-    console.log($scope.categories);
+    // Add the new category to the factory, to share it with the main controller
+    CategoriesData.addCategory(myCategory);
     
     $scope.cleanCategoryModal();
 	};
@@ -62,29 +92,38 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
     return currentId + 1;
   };
 
-/////////////////////////////////////////  Private function ///////////////////////////////////////// 
+  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
 
-$scope.readJson = function() {
+  $scope.readJson = function() {
 
-  $http.get('data/categories.json')
-    .then(function(res){
-      var x = res.data;
+    $http.get('data/categories.json')
+      .then(function(res){
+        var x = res.data;
 
-      // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
-      $scope.categories = x.concat($scope.userCategories);
+        // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
+        cat = x.concat($scope.userCategories);
 
-      //console.log("cat len: " + $scope.categories.length);
-    });
-};
+        CategoriesData.setCategories(cat);
 
-///////////////////////////////////////// Initialization /////////////////////////////////////////
+        console.log('CategoriesData List');
+        console.log(CategoriesData.getCategories());
 
+      });
+  };
+
+  ///////////////////////////////////////// Initialization /////////////////////////////////////////
+
+  //$scope.categories = [];
   var storedUserCategories = localStorageService.get('userCategories'); // Get local storage array "Betsy.userCategories"
-  var x = [];
+  var cat = [];
 
+ 
   // Initialize the array of user categories if the local storage is empty
   $scope.userCategories = storedUserCategories || [];
   
+  //console.log('userCategories');
+  //console.log($scope.userCategories);
+
   $scope.readJson();
 
 	$scope.cleanCategoryModal();

@@ -96,6 +96,10 @@ describe('Controller: ListCtrl', function () {
       
     });
 
+    it('It should not show the nremoved item in the category list after a user remove one', function() {
+      
+    });
+
 
   });
 
