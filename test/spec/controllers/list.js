@@ -30,7 +30,7 @@ describe('Controller: ListCtrl', function () {
 
   describe('Add / Remove a Category', function () {
 
-    it('should be to category in the local storage when adding 2 item', function () {
+    it('should be 2 category in the list when adding 2 category', function () {
       
       scope.categoryName = "Test category";
       scope.addCategory();
@@ -62,7 +62,7 @@ describe('Controller: ListCtrl', function () {
       expect(scope.userCategories[0].categoryName).toBe("Test category 1");
     });
 
-    it('should be id 0 then 1 when callin getNextId()', function () {
+    it('should be an incremented Id when callin getNextId()', function () {
 
       expect(scope.getNextId()).toBe(1);
 
@@ -72,6 +72,31 @@ describe('Controller: ListCtrl', function () {
       expect(scope.getNextId()).toBe(2);
       
     });
+  });
+
+  describe('The default list behavior', function () {
+
+    it('Should be an array of 11 default categories',function(){
+      
+      // TODO : Test the $HTTP with a mock object 
+      // Ref. : https://docs.angularjs.org/api/ngMock/service/$httpBackend
+      //scope.readJson();
+      //expect(scope.categories.length).toBe(10);
+      console.log('TODO : Should be an array of 11 defautl categoies');
+    });
+  });
+
+  describe('The behavior of the category list feature - default list + user defined list', function () {
+
+    it('It should show the 2 list combined - user defined list + default list', function() {
+          
+    });
+
+    it('It should show the new added item in the category list after a user add a new one', function() {
+      
+    });
+
 
   });
+
 });

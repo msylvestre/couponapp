@@ -21,9 +21,6 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
 		while (loop){
       
       if ($scope.userCategories[i].id === id ) {
-        
-      	console.log("rem id: "   + $scope.userCategories[i].id);
-      	console.log("rem catName: "   + $scope.userCategories[i].categoryName);
         $scope.userCategories.splice(i, 1);
         loop = false;
       }
@@ -39,12 +36,18 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
 	         categoryName: 	$scope.categoryName,
 	       };
 
-      	console.log("add id: "   + myCategory.id);
-      	console.log("add catName: "   + myCategory.categoryName);
-
     //alert("myitem.desc: " + myItem.desc);
-    $scope.userCategories.push(myCategory);
+    $scope.userCategories.push(myCategory);  // Array of user category that is saved to local storage
+    
 
+    // The form category list is not updated on the UI after adding a new category.
+    // See example here : https://docs.angularjs.org/api/ng/directive/select
+    $scope.categories.push(myCategory);  // Push the new category to the current list use in the UI
+
+
+    console.log('$scope.categories');
+    console.log($scope.categories);
+    
     $scope.cleanCategoryModal();
 	};
 
@@ -57,30 +60,33 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
       }
     }
     return currentId + 1;
-  }
+  };
 
 /////////////////////////////////////////  Private function ///////////////////////////////////////// 
 
+$scope.readJson = function() {
 
+  $http.get('data/categories.json')
+    .then(function(res){
+      var x = res.data;
+
+      // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
+      $scope.categories = x.concat($scope.userCategories);
+
+      //console.log("cat len: " + $scope.categories.length);
+    });
+};
 
 ///////////////////////////////////////// Initialization /////////////////////////////////////////
 
   var storedUserCategories = localStorageService.get('userCategories'); // Get local storage array "Betsy.userCategories"
+  var x = [];
 
   // Initialize the array of user categories if the local storage is empty
   $scope.userCategories = storedUserCategories || [];
+  
+  $scope.readJson();
 
-// TODO : Append the 2 list - Categories + User Categorie.  Need to find how to add 2 array
- $http.get('data/categories.json')
-       .then(function(res){
-          console.log("$scope.userCategories"); 
-          console.log($scope.userCategories); 
-					console.log("res.data"); 
-          console.log(res.data);
-          $scope.categories = res.data;
-        });
-
-  //$scope.categories.concat($scope.userCategories);
 	$scope.cleanCategoryModal();
 
 });
