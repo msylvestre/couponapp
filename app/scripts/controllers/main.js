@@ -1,8 +1,8 @@
 'use strict';
+ 
+angular.module('BetsyApp') 
 
-angular.module('BetsyApp')
-
-  .controller('MainCtrl', function ($scope, $http,localStorageService, CategoriesData) {
+  .controller('MainCtrl', function ($scope, $http, localStorageService, CategoriesData) {
 
     $scope.$watch(function () 
       { return CategoriesData.getCategories(); }, function (newValue) {
@@ -10,9 +10,8 @@ angular.module('BetsyApp')
           $scope.categories = newValue;
           console.log('$scope.categories');
           console.log($scope.categories);
-        }
-        
-    });
+        }        
+    });  
  
     // FUNC: Watch when change happen in the "items" array and update the localstorage
     $scope.$watch('items', function () {

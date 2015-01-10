@@ -70,6 +70,8 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
 	         categoryName: 	$scope.categoryName,
 	       };
 
+         console.log('cat Name: ' + $scope.categoryName);
+
     // Array of user category that is saved to local storage.  Local Storage updated each time due to the "watch"
     $scope.userCategories.push(myCategory);  
     
