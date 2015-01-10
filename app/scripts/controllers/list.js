@@ -90,31 +90,29 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
     return currentId + 1;
   };
 
-  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
-
+ 
   $scope.readJson = function() {
 
     $http.get('data/categories.json')
       .then(function(res){
         var x = res.data;
 
-        // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
-        cat = x.concat($scope.userCategories);
-
-        CategoriesData.setCategories(cat);
-
-        console.log('CategoriesData List');
-        console.log(CategoriesData.getCategories());
-
+        $scope.concatCategories(x);
       });
+  };
+
+  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
+
+  $scope.concatCategories = function(jsonCat) {
+    // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
+    var cat = jsonCat.concat($scope.userCategories);
+
+    CategoriesData.setCategories(cat);
   };
 
   ///////////////////////////////////////// Initialization /////////////////////////////////////////
 
-  //$scope.categories = [];
   var storedUserCategories = localStorageService.get('userCategories'); // Get local storage array "Betsy.userCategories"
-  var cat = [];
-
  
   // Initialize the array of user categories if the local storage is empty
   $scope.userCategories = storedUserCategories || [];
