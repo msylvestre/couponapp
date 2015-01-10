@@ -5,15 +5,21 @@ describe('Controller: ListCtrl', function () {
   // load the controller's module
   beforeEach(module('BetsyApp'));
 
-  var AboutCtrl,
-    scope;
+  var ListCtrl,
+      scope,
+      http;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $http) {
+    
+    http = $http;
+
     scope = $rootScope.$new();
-    AboutCtrl = $controller('ListCtrl', {
+
+    ListCtrl = $controller('ListCtrl', {
       $scope: scope
     });
+    
   }));
 
   describe('Validate initial state', function () {
@@ -78,11 +84,16 @@ describe('Controller: ListCtrl', function () {
 
     it('Should be an array of 11 default categories',function(){
       
-      // TODO : Test the $HTTP with a mock object 
-      // Ref. : https://docs.angularjs.org/api/ngMock/service/$httpBackend
-      //scope.readJson();
-      //expect(scope.categories.length).toBe(10);
-      console.log('TODO : Should be an array of 11 defautl categoies');
+
+      var cat = [];
+
+      http.get('data/categories.json')
+        .then(function(res){
+          cat = res.data;
+
+          // Validate that the number of default category in the json file is 11
+          expect(cat.length).toBe(11);
+      });
     });
   });
 

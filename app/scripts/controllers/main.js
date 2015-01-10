@@ -11,6 +11,7 @@ angular.module('BetsyApp')
           console.log('$scope.categories');
           console.log($scope.categories);
         }
+        
     });
  
     // FUNC: Watch when change happen in the "items" array and update the localstorage
