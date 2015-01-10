@@ -2,6 +2,7 @@
 
 describe('Controller: ListCtrl', function () {
 
+
   // load the controller's module
   beforeEach(module('BetsyApp'));
 
@@ -84,23 +85,14 @@ describe('Controller: ListCtrl', function () {
 
     it('Should be an array of 11 default categories',function(){
       
-
-      var cat = [];
-
-      http.get('data/categories.json')
-        .then(function(res){
-          cat = res.data;
-
-          // Validate that the number of default category in the json file is 11
-          expect(cat.length).toBe(11);
-      });
     });
+  
   });
 
-  describe('The behavior of the category list feature - default list + user defined list', function () {
+  describe('The behavior of the category list feature', function () {
 
     it('It should show the 2 list combined - user defined list + default list', function() {
-          
+      
     });
 
     it('It should show the new added item in the category list after a user add a new one', function() {
