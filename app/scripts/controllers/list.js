@@ -1,13 +1,46 @@
+'use strict';
+
 var App = angular.module('BetsyApp');
 
-App.controller('ListCtrl', function($scope, $http, localStorageService) {
+App.factory('CategoriesData', function(){
+    var categoriesData = [];
+
+    return {
+        getCategories: function () {
+            return categoriesData;
+        },
+        setCategories: function (cat) {
+            categoriesData = cat;
+        },
+        addCategory: function (cat) {
+          categoriesData.push(cat);
+        },
+        removeCategory: function(id){
+
+          // TODO : Refactor the Factory... not sure it's a best practice to have logic here.  Anyway, it should go with the PostgreSQL integration
+          var loop = true;
+          var i = 0;
+
+          while (loop){
+            
+            if (categoriesData[i].id === id ) {
+              categoriesData.splice(i, 1);
+              loop = false;
+            }
+            i ++;
+          }
+
+        }
+    };
+});
+
+App.controller('ListCtrl', function($scope, $http, localStorageService, CategoriesData) {
   
 	$scope.$watch('userCategories', function () {
 
 	  // Update the local storage
 	  localStorageService.set('userCategories', $scope.userCategories);	   
 	}, true);
-
 
 	$scope.cleanCategoryModal = function() {
 		$scope.categoryName = null;
@@ -21,15 +54,13 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
 		while (loop){
       
       if ($scope.userCategories[i].id === id ) {
-        
-      	console.log("rem id: "   + $scope.userCategories[i].id);
-      	console.log("rem catName: "   + $scope.userCategories[i].categoryName);
         $scope.userCategories.splice(i, 1);
         loop = false;
       }
       i ++;
 		}
-		
+
+    CategoriesData.removeCategory(id);
 	};
 
 	$scope.addCategory = function() {
@@ -39,12 +70,12 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
 	         categoryName: 	$scope.categoryName,
 	       };
 
-      	console.log("add id: "   + myCategory.id);
-      	console.log("add catName: "   + myCategory.categoryName);
-
-    //alert("myitem.desc: " + myItem.desc);
-    $scope.userCategories.push(myCategory);
-
+    // Array of user category that is saved to local storage.  Local Storage updated each time due to the "watch"
+    $scope.userCategories.push(myCategory);  
+    
+    // Add the new category to the factory, to share it with the main controller
+    CategoriesData.addCategory(myCategory);
+    
     $scope.cleanCategoryModal();
 	};
 
@@ -57,30 +88,38 @@ App.controller('ListCtrl', function($scope, $http, localStorageService) {
       }
     }
     return currentId + 1;
-  }
+  };
 
-/////////////////////////////////////////  Private function ///////////////////////////////////////// 
+  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
 
+  $scope.readJson = function() {
 
+    $http.get('data/categories.json')
+      .then(function(res){
+        var x = res.data;
 
-///////////////////////////////////////// Initialization /////////////////////////////////////////
+        // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
+        cat = x.concat($scope.userCategories);
 
+        CategoriesData.setCategories(cat);
+
+        console.log('CategoriesData List');
+        console.log(CategoriesData.getCategories());
+
+      });
+  };
+
+  ///////////////////////////////////////// Initialization /////////////////////////////////////////
+
+  //$scope.categories = [];
   var storedUserCategories = localStorageService.get('userCategories'); // Get local storage array "Betsy.userCategories"
+  var cat = [];
 
+ 
   // Initialize the array of user categories if the local storage is empty
   $scope.userCategories = storedUserCategories || [];
+  
+  $scope.readJson();
 
-// TODO : Append the 2 list - Categories + User Categorie.  Need to find how to add 2 array
- $http.get('data/categories.json')
-       .then(function(res){
-          console.log("$scope.userCategories"); 
-          console.log($scope.userCategories); 
-					console.log("res.data"); 
-          console.log(res.data);
-          $scope.categories = res.data;
-        });
-
-  //$scope.categories.concat($scope.userCategories);
 	$scope.cleanCategoryModal();
-
 });

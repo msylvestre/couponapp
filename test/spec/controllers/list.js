@@ -5,15 +5,21 @@ describe('Controller: ListCtrl', function () {
   // load the controller's module
   beforeEach(module('BetsyApp'));
 
-  var AboutCtrl,
-    scope;
+  var ListCtrl,
+      scope,
+      http;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $http) {
+    
+    http = $http;
+
     scope = $rootScope.$new();
-    AboutCtrl = $controller('ListCtrl', {
+
+    ListCtrl = $controller('ListCtrl', {
       $scope: scope
     });
+    
   }));
 
   describe('Validate initial state', function () {
@@ -30,7 +36,7 @@ describe('Controller: ListCtrl', function () {
 
   describe('Add / Remove a Category', function () {
 
-    it('should be to category in the local storage when adding 2 item', function () {
+    it('should be 2 category in the list when adding 2 category', function () {
       
       scope.categoryName = "Test category";
       scope.addCategory();
@@ -62,7 +68,7 @@ describe('Controller: ListCtrl', function () {
       expect(scope.userCategories[0].categoryName).toBe("Test category 1");
     });
 
-    it('should be id 0 then 1 when callin getNextId()', function () {
+    it('should be an incremented Id when callin getNextId()', function () {
 
       expect(scope.getNextId()).toBe(1);
 
@@ -72,6 +78,40 @@ describe('Controller: ListCtrl', function () {
       expect(scope.getNextId()).toBe(2);
       
     });
+  });
+
+  describe('The default list behavior', function () {
+
+    it('Should be an array of 11 default categories',function(){
+      
+
+      var cat = [];
+
+      http.get('data/categories.json')
+        .then(function(res){
+          cat = res.data;
+
+          // Validate that the number of default category in the json file is 11
+          expect(cat.length).toBe(11);
+      });
+    });
+  });
+
+  describe('The behavior of the category list feature - default list + user defined list', function () {
+
+    it('It should show the 2 list combined - user defined list + default list', function() {
+          
+    });
+
+    it('It should show the new added item in the category list after a user add a new one', function() {
+      
+    });
+
+    it('It should not show the nremoved item in the category list after a user remove one', function() {
+      
+    });
+
 
   });
+
 });

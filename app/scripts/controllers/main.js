@@ -1,8 +1,19 @@
 'use strict';
 
 angular.module('BetsyApp')
-  .controller('MainCtrl', function ($scope, localStorageService) {
 
+  .controller('MainCtrl', function ($scope, $http,localStorageService, CategoriesData) {
+
+    $scope.$watch(function () 
+      { return CategoriesData.getCategories(); }, function (newValue) {
+        if (newValue) {
+          $scope.categories = newValue;
+          console.log('$scope.categories');
+          console.log($scope.categories);
+        }
+        
+    });
+ 
     // FUNC: Watch when change happen in the "items" array and update the localstorage
     $scope.$watch('items', function () {
 
@@ -18,6 +29,7 @@ angular.module('BetsyApp')
       $scope.itemName     = '';
       $scope.itemQty      = '';
       $scope.itemPrice    = '';
+      $scope.selectedCategory = '';
       $scope.isTax        = false;
       $scope.couponWorth  = '';
       $scope.couponQty    = '';
@@ -127,9 +139,9 @@ angular.module('BetsyApp')
 
     $scope.debugButton = function() {
       console.log('selectedCategory : ' + $scope.selectedCategory);
-    }
+    };
 
-  /////////////////////////////////////////  Private function /////////////////////////////////////////
+    /////////////////////////////////////////  Private function /////////////////////////////////////////
 
     function getNextId() {
       var currentId = 0;
@@ -148,7 +160,10 @@ angular.module('BetsyApp')
       $scope.getTotalAmountToPay();
     }
 
-/////////////////////////////////////////  Initialize /////////////////////////////////////////
+    /////////////////////////////////////////  Private function ///////////////////////////////////////// 
+
+
+    /////////////////////////////////////////  Initialize /////////////////////////////////////////
 
     $scope.taxPercentage = 1.14975;
     var itemsInStore = localStorageService.get('items'); // Get local storage array "Betsy.items"
@@ -159,5 +174,4 @@ angular.module('BetsyApp')
 
     $scope.cleanForm();
     $scope.getTotalItemsPrice();
-    //$scope.loadCategories();
   });
