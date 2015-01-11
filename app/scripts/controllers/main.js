@@ -101,24 +101,24 @@ angular.module('BetsyApp')
       return itemPrice;
     };
 
-    $scope.doubleCoupon = function(itemPrice, isDoubled) {
+    $scope.doubleCouponWorth = function(couponWorth, isDoubled) {
       if (isDoubled) {
-        return itemPrice * 2.0;
+        return couponWorth * 2.0;
       }
 
-      return itemPrice;
+      return couponWorth;
     }
 
     $scope.getTotalPrice = function() {
       var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - 
-               ($scope.couponQty * $scope.doubleCoupon($scope.couponWorth, $scope.couponDouble)));
+               ($scope.couponQty * $scope.doubleCouponWorth($scope.couponWorth, $scope.couponDouble)));
 
       return x || 0;
     };
 
     $scope.getPricePerItem = function() {
       var x = (($scope.itemQty * $scope.addTax($scope.itemPrice, $scope.isTax)) - 
-               ($scope.couponQty * $scope.doubleCoupon($scope.couponWorth, $scope.couponDouble))) / $scope.itemQty; 
+               ($scope.couponQty * $scope.doubleCouponWorth($scope.couponWorth, $scope.couponDouble))) / $scope.itemQty; 
 
       return x || 0;
     };
@@ -138,7 +138,7 @@ angular.module('BetsyApp')
       var couponsWorthTotal = 0;
 
       for (var i = 0; i < $scope.items.length; i++) {
-        couponsWorthTotal += $scope.doubleCoupon($scope.items[i].couponWorthTotal, $scope.items[i].couponDouble);
+        couponsWorthTotal += $scope.doubleCouponWorth($scope.items[i].couponWorthTotal, $scope.items[i].couponDouble);
       }
 
       $scope.amountToPay = $scope.itemsPriceTotal - $scope.couponsWorthTotal;

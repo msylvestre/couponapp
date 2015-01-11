@@ -162,10 +162,10 @@ describe('Controller: MainCtrl', function () {
     });
 
     it('Should be a right double coupon amount when application', function() {
-      expect(scope.doubleCoupon(0,true) ).toBe(0);
-      expect(scope.doubleCoupon(0,false) ).toBe(0);
-      expect(scope.doubleCoupon(1.5,true) ).toBe(3.0);
-      expect(scope.doubleCoupon(1.5,false) ).toBe(1.5);
+      expect(scope.doubleCouponWorth(0,true) ).toBe(0);
+      expect(scope.doubleCouponWorth(0,false) ).toBe(0);
+      expect(scope.doubleCouponWorth(1.5,true) ).toBe(3.0);
+      expect(scope.doubleCouponWorth(1.5,false) ).toBe(1.5);
     })
   });
 
