@@ -5,7 +5,7 @@
 -->
 
   <!-- Modal Add item-->
-  <div class="modal fade" id="modalDetailItem" tabindex="-1" role="dialog" aria-labelledby="modalDetailItemLabel" aria-hidden="false">
+  <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="modalDetailItemLabel" aria-hidden="false">
     
     <div class="modal-dialog">
       <div class="modal-content">
@@ -144,11 +144,11 @@
   </div>
 
   <!-- Modal Edit Categories-->
-  <div class="modal fade" id="modalEditCategories" tabindex="-1" role="dialog" aria-labelledby="modalEditCategoriesLabel" aria-hidden="false" ng-include="'views/editUserCategories.html'"></div>
+  <div class="modal fade" id="modalEditCategories" tabindex="-1" role="dialog" aria-labelledby="modalEditCategoriesLabel" aria-hidden="false" ng-include="'views/userCategoryModal.html'"></div>
 
    <div>
     <h4>Item & Coupon list
-      <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#modalDetailItem">
+      <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#itemModal">
         Add Item
       </button>
     </h4>

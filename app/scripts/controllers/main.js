@@ -8,8 +8,6 @@ angular.module('BetsyApp')
       { return CategoriesData.getCategories(); }, function (newValue) {
         if (newValue) {
           $scope.categories = newValue;
-          console.log('$scope.categories');
-          console.log($scope.categories);
         }        
     });  
  
@@ -122,7 +120,6 @@ angular.module('BetsyApp')
 
       return x || 0;
     };
-
 
     $scope.getTotalItemsPrice = function() {
       var itemsPriceTotal = 0;
