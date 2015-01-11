@@ -1,12 +1,12 @@
 'use strict';
 
-describe('Controller: ListCtrl', function () {
+describe('Controller: userCategoryCtrl', function () {
 
 
   // load the controller's module
   beforeEach(module('BetsyApp'));
 
-  var ListCtrl,
+  var userCategoryCtrl,
       scope,
       http;
 
@@ -17,7 +17,7 @@ describe('Controller: ListCtrl', function () {
 
     scope = $rootScope.$new();
 
-    ListCtrl = $controller('ListCtrl', {
+    userCategoryCtrl = $controller('userCategoryCtrl', {
       $scope: scope
     });
     

@@ -15,7 +15,7 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  function addItem(tax, itemPrice, itemQty, couponQty, couponWorth){
+  function addItem(tax, itemPrice, itemQty, couponQty, couponWorth, doubled){
       scope.id = '';
       scope.itemName = 'Test Item';
       scope.itemQty = itemPrice;
@@ -23,6 +23,7 @@ describe('Controller: MainCtrl', function () {
       scope.couponQty = couponQty;
       scope.couponWorth = couponWorth;
       scope.isTax = tax || false;
+      scope.couponDouble = doubled || false;
       scope.saveItem();
 }
 
@@ -35,6 +36,7 @@ describe('Controller: MainCtrl', function () {
       expect(scope.itemPrice).toBe('');
       expect(scope.isTax).toBe(false);
       expect(scope.couponWorth).toBe('');
+      expect(scope.couponDouble).toBe(false);
       expect(scope.couponQty).toBe('');
       expect(scope.itemNotes).toBe('');
 
@@ -116,6 +118,11 @@ describe('Controller: MainCtrl', function () {
       var x = (((15 * scope.taxPercentage) - 2) / 3);
       expect(scope.getPricePerItem()).toBe(x);
 
+      // (3 item @ 5$ + tax) - 2 coupon @ 1$ (doubled)
+      scope.couponDouble = true;
+      var x = (((15 * scope.taxPercentage) - 2 * 2) / 3);
+      expect(scope.getPricePerItem()).toBe(x);
+
       //dump('Should be a right "Price per Item" in the Add/Edit item form');
     });
 
@@ -139,6 +146,11 @@ describe('Controller: MainCtrl', function () {
       scope.couponWorth = 1;
       expect(scope.getTotalPrice()).toBe(8);
 
+      // 2 items @ 5$ - 2 coupon @ 1.5 (doubled) = 4
+      scope.couponDouble = true;
+      scope.couponWorth = 1.5;
+      expect(scope.getTotalPrice()).toBe(4);
+
       //dump('Should be a right "Total Price" in the Add/Edit item form');
     });
 
@@ -148,6 +160,13 @@ describe('Controller: MainCtrl', function () {
 
       //dump('Should be a right tax amount when tax is applicable');
     });
+
+    it('Should be a right double coupon amount when application', function() {
+      expect(scope.doubleCouponWorth(0,true) ).toBe(0);
+      expect(scope.doubleCouponWorth(0,false) ).toBe(0);
+      expect(scope.doubleCouponWorth(1.5,true) ).toBe(3.0);
+      expect(scope.doubleCouponWorth(1.5,false) ).toBe(1.5);
+    })
   });
 
   describe('Report Test Suite', function () {
@@ -169,8 +188,8 @@ describe('Controller: MainCtrl', function () {
       expect(scope.getTotalCouponsWorth()).toBe(0);
 
       addItem(false,2,5,2,1);
-      addItem(false,3,10,2,1);
-      expect(scope.getTotalCouponsWorth()).toBe(4);      
+      addItem(false,3,10,2,1, true);
+      expect(scope.getTotalCouponsWorth()).toBe(6);      
       //dump('Should be a right "Total Coupon" in the report');
     });
 

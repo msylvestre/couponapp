@@ -34,7 +34,7 @@ App.factory('CategoriesData', function(){
     };
 });
 
-App.controller('ListCtrl', function($scope, $http, localStorageService, CategoriesData) {
+App.controller('userCategoryCtrl', function($scope, $http, localStorageService, CategoriesData) {
   
 	$scope.$watch('userCategories', function () {
 
@@ -69,6 +69,8 @@ App.controller('ListCtrl', function($scope, $http, localStorageService, Categori
 	         id: 	 					$scope.getNextId(),
 	         categoryName: 	$scope.categoryName,
 	       };
+
+         console.log('cat Name: ' + $scope.categoryName);
 
     // Array of user category that is saved to local storage.  Local Storage updated each time due to the "watch"
     $scope.userCategories.push(myCategory);  
