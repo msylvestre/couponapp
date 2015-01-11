@@ -144,9 +144,10 @@
   </div>
 
   <!-- Modal Edit Categories-->
-  <div class="modal fade" id="modalEditCategories" tabindex="-1" role="dialog" aria-labelledby="modalEditCategoriesLabel" aria-hidden="false" ng-include="'views/userCategoryModal.html'"></div>
+  <div class="modal fade" id="modalEditCategories" tabindex="-1" role="dialog" aria-labelledby="modalEditCategoriesLabel" aria-hidden="false" ng-include="'views/userCategoryModal.html'">
+  </div>
 
-   <div>
+  <div>
     <h4>Item & Coupon list
       <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#itemModal">
         Add Item
@@ -166,7 +167,7 @@
         <th>Action</th>
       </tr> 
       <tr ng-repeat="t in items">
-        <td><a ng-ref data-toggle="modal" data-target="#modalDetailItem" ng-click="getDetailItem($index)">{{t.itemName}}</a></td>
+        <td><a ng-ref data-toggle="modal" data-target="#itemModal" ng-click="getDetailItem($index)">{{t.itemName}}</a></td>
         <td>{{t.itemPrice | currency}}</td>
         <td>{{t.itemQty}}</td>
         <td>{{t.couponQty}}</td>
