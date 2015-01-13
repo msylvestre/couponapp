@@ -34,7 +34,7 @@ App.factory('CategoriesData', function(){
     };
 });
 
-App.controller('userCategoryCtrl', function($scope, $http, localStorageService, CategoriesData) {
+App.controller('UserCategoryCtrl', function($scope, $http, localStorageService, CategoriesData) {
   
 	$scope.$watch('userCategories', function () {
 

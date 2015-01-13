@@ -4,7 +4,7 @@ var App = angular.module('BetsyApp');
 
 App.factory('ItemsData', function(){
     var itemsData = [];
-    var editIndex = -1;
+    var editIndex = 0;
 
     return {
         getItems: function () {
@@ -17,7 +17,8 @@ App.factory('ItemsData', function(){
 
         removeItem: function(id){
 
-          // TODO : Refactor the Factory... not sure it's a best practice to have logic here.  Anyway, it should go with the PostgreSQL integration
+          // TODO : Refactor the Factory... not sure it's a best practice to have logic here.  
+          //        Anyway, it should go with the PostgreSQL integration
           var loop = true;
           var i = 0;
 
@@ -31,11 +32,13 @@ App.factory('ItemsData', function(){
           }
         },
 
-        setDetailItem2: function(index){
+        setDetailItem: function(index){
+          console.log('ItemsData.setDetailItem index: ' + index);
           editIndex = index;
         },
 
-        getDetailItem2: function(){
+        getDetailItem: function(){
+          console.log('returning index after detecting an action: ' + editIndex);
           return editIndex;
         },
 
@@ -62,11 +65,15 @@ App.controller('ItemCtrl', function($scope, localStorageService, ItemsData) {
   }, true);
 
   $scope.$watch(function () 
-    { return ItemsData.getDetailItem2(); }, function (newValue) {
-      if (newValue) {
-        $scope.getDetailItem(ItemsData.getDetailItem2());
-      }        
+    { return ItemsData.getDetailItem(); }, function (newValue) {
+      
+      //if (newValue) {
+        console.log('newValue: ' + newValue);
+        $scope.getDetailItem(newValue);
+      //}        
   });  
+
+
 
   $scope.cleanForm = function() {
     // Clean the model variable
@@ -127,7 +134,7 @@ App.controller('ItemCtrl', function($scope, localStorageService, ItemsData) {
 
   // FUNC: Load the detail in the view scope
   $scope.getDetailItem = function (index) {
-    editIndex           = index;
+    
     $scope.id           = $scope.items[index].id;
     $scope.itemName     = $scope.items[index].itemName;
     $scope.itemQty      = $scope.items[index].itemQty;

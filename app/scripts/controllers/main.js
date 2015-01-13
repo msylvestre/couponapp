@@ -8,7 +8,6 @@ angular.module('BetsyApp')
       { return CategoriesData.getCategories(); }, function (newValue) {
         if (newValue) {
           $scope.categories = newValue;
-          console.log("WATCH getCategories");
         }        
     });  
  
@@ -16,8 +15,6 @@ angular.module('BetsyApp')
       function (newValue) {
         if (newValue) {
           $scope.items = newValue;
-          //return newValue;
-          console.log("WATCH !!!!!!  getItems()"); 
         }        
       }
     );  
@@ -27,7 +24,7 @@ angular.module('BetsyApp')
     };
 
     $scope.setDetailItem = function(index) {
-      ItemsData.setDetailItem2(index);
+      ItemsData.setDetailItem(index);
     };
 
     /////////////////////////////////////////  Private function /////////////////////////////////////////
