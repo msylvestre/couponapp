@@ -97,20 +97,23 @@ App.controller('userCategoryCtrl', function($scope, $http, localStorageService, 
 
     $http.get('data/categories.json')
       .then(function(res){
-        var x = res.data;
+        var jsonCat = res.data;
 
-        $scope.concatCategories(x);
+        $scope.concatCategories(jsonCat);
       });
   };
 
-  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
-
   $scope.concatCategories = function(jsonCat) {
     // Happen the 2 list (default + user catgories) in the call back, since it's asynchronous
-    var cat = jsonCat.concat($scope.userCategories);
+    var allCat = jsonCat.concat($scope.userCategories);
 
-    CategoriesData.setCategories(cat);
+    CategoriesData.setCategories(allCat);
+    console.log("concatCategories");
   };
+  
+  /////////////////////////////////////////  Private function ///////////////////////////////////////// 
+
+  
 
   ///////////////////////////////////////// Initialization /////////////////////////////////////////
 
