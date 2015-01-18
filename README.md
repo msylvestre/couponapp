@@ -11,10 +11,10 @@ Prototype of a coupon management app in node.js
 
 Open command line
 Create a directory and go in it
-```
-$ md couponapp
-$ cd couponapp
-```
+
+    $ md couponapp
+    $ cd couponapp
+
 
 Clone the app
 ```
